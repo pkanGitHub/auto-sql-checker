@@ -1,4 +1,5 @@
 # import mysql.connector
+import sys
 
 # def main():
 #create a connector object
@@ -22,7 +23,8 @@
 def readFile():
     # read file and remove commented lines
     queries = []
-    with open('queries.sql') as file:
+    # pass file name in the argument you want to read
+    with open(sys.argv[1]) as file:
         for line in file:
             li = line.strip()
             if not li.startswith('--'):
