@@ -22,26 +22,26 @@
 def readFile():
     # read file and remove commented lines
     queries = []
-    final_queries = []
     with open('queries.sql') as file:
         for line in file:
             li = line.strip()
             if not li.startswith('--'):
                 queries.append(line.rstrip())
         # join queries from multiple lines into one line
-        merged_queries = "".join(q.strip() for q in queries)
+        # the " " is to join each line adding a space in between
+        merged_queries = " ".join(q.strip() for q in queries)
         # split queries by semicolon(;)
-        final_queries.append(merged_queries.split(";"))
+        final_queries = merged_queries.split(";")
 
         return final_queries
         
 
 def writeFile():
     line = readFile()
-    with open("Queries.csv", "w") as file:
+    with open("FormattedQueries.sql", "w") as file:
         for q in line:
-            # file.write(f"{q}")
-            print(q)
+            # write each queries in its own line in csv file
+            file.write(f"{q.strip()}\n")
        
 def main():
     writeFile()
