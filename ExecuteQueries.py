@@ -2,8 +2,8 @@ import pandas as pd
 # import numpy as np
 from FormatQueries import *
 from sqlalchemy import create_engine
-from openpyxl import Workbook
-from openpyxl.styles import Border, Alignment, PatternFill
+from openpyxl import Workbook, load_workbook
+# from openpyxl.styles import Border, Alignment, PatternFill
 
 def get_database():
     print("\nAvailable databases: ")
@@ -20,7 +20,7 @@ def get_database():
         return get_database()
     return database
 
-def create_connector_object(database_name):
+def create_connector_engine(database_name):
     # mydb = mysql.connector.connect(
     #     host="mysql-container",
     #     user="root",
@@ -28,36 +28,24 @@ def create_connector_object(database_name):
     #     database=f"{database_name}"
     # )
     engine_uri = f"mysql+mysqlconnector://root:root@mysql-container:3306/{database_name}"
-    connection = create_engine(engine_uri)
+    engine = create_engine(engine_uri)
 
-    return connection
+    return engine
 
 def create_workbook(path):
    workbook = Workbook()
    workbook.save(path) 
 
-def cell_style(path):
-    workbook = Workbook()
-    sheet = workbook.active
-    # for wrapRows in sheet.iter_rows(min_row=1, min_col=1):
-    #     for cell in wrapRows:
-    #         cell.alignment = Alignment(horizontal="center", vertical="center", wrapText=True)
-    sheet.column_dimensions
-
-    # green = "96C8A2"
-    # for colorRow in sheet.head(1):
-    #     for colorCell in colorRow:
-    #         colorCell.fill = PatternFill(start_color=green, end_color=green,fill_type = "solid")
-    workbook.save(path)
-
-
-def read_formatted_file(database, path):
-    mydb = create_connector_object(database)
+def execute_formatted_file(database, path):
+    mydb = create_connector_engine(database)
     with open ('FormattedQueries.sql') as file:
         queries_file = file.read()
         queries = queries_file.splitlines()
         page = 1
         for q in queries:
+            # if line in file is empty line, then skip
+            if (len(q.strip()) == 0):
+                continue
             pd_query = pd.read_sql(q, mydb)
             try:
                 df = pd.DataFrame(pd_query)
@@ -65,7 +53,8 @@ def read_formatted_file(database, path):
                     # df.to_excel(writer,sheet_name="Sheet",startrow=writer.sheets["Sheet"].max_row,index=False)
                     df.to_excel(writer,sheet_name=f"Sheet{page}", index=False)
                     print(f'Query {page} write successfully')
-                    page += 1
+                page += 1
+
             except Exception as err:
                 print(f"Error Occured: {err}")
 
@@ -74,11 +63,11 @@ def main():
     writeFile()
     create_workbook(path) 
     database = get_database()
-    read_formatted_file(database, path)
-    try:
-        create_connector_object(database)
-        print("Successfully connected to the database!")
-    except Exception as err:
-        print(f"Error Occured: {err}")
+    execute_formatted_file(database, path)
+    # try:
+    #     create_connector_engine(database)
+    #     print("Successfully connected to the database!")
+    # except Exception as err:
+    #     print(f"Error Occured: {err}")
 
 main()
