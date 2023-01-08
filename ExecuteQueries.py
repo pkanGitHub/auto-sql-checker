@@ -54,7 +54,6 @@ def execute_formatted_file(database, path):
                     df.to_excel(writer,sheet_name=f"Sheet{page}", index=False)
                     print(f'Query {page} write successfully')
                 page += 1
-
             except Exception as err:
                 print(f"Error Occured: {err}")
 
@@ -64,10 +63,10 @@ def main():
     create_workbook(path) 
     database = get_database()
     execute_formatted_file(database, path)
-    # try:
-    #     create_connector_engine(database)
-    #     print("Successfully connected to the database!")
-    # except Exception as err:
-    #     print(f"Error Occured: {err}")
+    try:
+        create_connector_engine(database)
+        print("Successfully connected to the database!")
+    except Exception as err:
+        print(f"Error Occured: {err}")
 
 main()
