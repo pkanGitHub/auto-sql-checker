@@ -1,6 +1,6 @@
 # Auto SQL Checkers (In development)
 
-This Checker program is intend to use for IT 3380. As a PLA, it is sometimes really time consuming while having to check 30+ students with at least 10+ queries each. This program is design to make grading easier for myself by having the program auto execute the results from assignment files.
+This Checker program is intend to use for IT 3380. As a PLA, it is sometimes really time consuming while having to check 30+ students with at least 10+ queries each. This program is design to make grading easier for myself by having the program auto execute and get the results from assignment files.
 
 **GOAL:** the final version is aiming to compare the results and auto grade.
 
@@ -25,12 +25,12 @@ This Version of SQL Checker is to read from given sql file and execute the resul
 
 ### **Instruction:**
 
-1. Get into `Results-onto-excel`'s project directory.
+1. Get into `Results-to-excel`'s project directory.
 
    In python container, run:
 
    ```
-   python ExecuteQueries.py <file name for execution>
+   python ExecuteQueries.py <sql file you want to execute>
    ```
 
 2. Then it'll prompt user for database name:
