@@ -21,11 +21,13 @@ This Checker program is intend to use for IT 3380. As a PLA, it is sometimes rea
 
 ## **(Ver1) Results onto Excel sheets**
 
-This Version of SQL Checker is to read from given sql file and execute the results onto an Excel file.
+This Version of SQL Checker is to read from given sql file and execute the results onto an Excel file name `Result_Data`.
 
 ### **Instruction:**
 
-1. Get into `Results-to-excel`'s project directory.
+1. Paste all the sql files you want to run in sqlFiles folder.
+
+2. Get into `Results-to-excel`'s project directory.
 
    In python container, run:
 
@@ -33,7 +35,7 @@ This Version of SQL Checker is to read from given sql file and execute the resul
    python ExecuteQueries.py <sql file you want to execute>
    ```
 
-2. Then it'll prompt user for database name:
+3. Then it'll prompt user for database name:
 
    ```
    Available databases:
@@ -47,7 +49,7 @@ This Version of SQL Checker is to read from given sql file and execute the resul
    What database are you using?
    ```
 
-3. Once finish the above steps, the program will then execute and output the results onto the Excel file by sheets.
+4. Once finish the above steps, the program will then execute the queries and output the results onto the Excel by sheets.
 
 ## Resources used:
 
