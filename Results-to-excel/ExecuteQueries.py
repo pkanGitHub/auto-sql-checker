@@ -1,8 +1,9 @@
 import pandas as pd
-# import numpy as np
 from FormatQueries import *
 from sqlalchemy import create_engine
 from openpyxl import Workbook, load_workbook
+from openpyxl.utils.cell import get_column_letter
+
 # from openpyxl.styles import Border, Alignment, PatternFill
 
 def get_database():
@@ -21,17 +22,11 @@ def get_database():
     return database
 
 def create_connector_engine(database_name):
-    # mydb = mysql.connector.connect(
-    #     host="mysql-container",
-    #     user="root",
-    #     passwd="root",
-    #     database=f"{database_name}"
-    # )
     engine_uri = f"mysql+mysqlconnector://root:root@mysql-container:3306/{database_name}"
     engine = create_engine(engine_uri)
-
     return engine
 
+#create empty excel file
 def create_workbook(path):
    workbook = Workbook()
    workbook.save(path) 
@@ -43,7 +38,7 @@ def execute_formatted_file(database, path):
         queries = queries_file.splitlines()
         page = 1
         for q in queries:
-            # if line in file is empty line, then skip
+            # if line in file is empty, then skip
             if (len(q.strip()) == 0):
                 continue
             pd_query = pd.read_sql(q, mydb)
@@ -57,15 +52,47 @@ def execute_formatted_file(database, path):
             except Exception as err:
                 print(f"Error Occured: {err}")
 
+def remove_default_sheet(path):
+    wb = load_workbook(path)
+    del wb['Sheet']
+    wb.save(path)
+
+def auto_adjust_column_width(path):
+    wb = load_workbook(path)
+    sheets_dict = pd.read_excel(path, sheet_name=None)
+    all_sheets = []
+    for name, sheet in sheets_dict.items():
+        sheet['sheet'] = name
+        all_sheets.append(name)
+    # iterate thru every sheets
+    for sh in all_sheets:
+        ws = wb[sh]
+        # get into each col in the sheet
+        for col in ws.columns:
+            max_length = 0
+            column = col[0].column #this will get the column number
+            letter = get_column_letter(column) # convert column number into column letter
+            for cell in col:
+                try:
+                    if len(str(cell.value)) > max_length:
+                        max_length = len(cell.value)
+                    adjusted_width = max_length * 1.6
+                except:
+                    pass
+                ws.column_dimensions[letter].width = adjusted_width
+    wb.save(path)
+
 def main():
-    path = 'Result_Data.xlsx'
-    writeFile()
-    create_workbook(path) 
     database = get_database()
-    execute_formatted_file(database, path)
     try:
         create_connector_engine(database)
-        print("Successfully connected to the database!")
+        print(f"{database} connected, now processing...\n")
+        path = 'Result_Data.xlsx'
+        writeFile()
+        create_workbook(path) 
+        execute_formatted_file(database, path)
+        remove_default_sheet(path)
+        auto_adjust_column_width(path)
     except Exception as err:
         print(f"Error Occured: {err}")
 
