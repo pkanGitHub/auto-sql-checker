@@ -1,9 +1,9 @@
 import pandas as pd
-# import numpy as np
 from FormatQueries import *
 from sqlalchemy import create_engine
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils.cell import get_column_letter
+
 # from openpyxl.styles import Border, Alignment, PatternFill
 
 def get_database():
