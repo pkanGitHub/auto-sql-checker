@@ -9,6 +9,7 @@ def readFile():
             # remove commented lines
             if not li.startswith('--'):
                 queries.append(line.rstrip())
+    
         # join queries from multiple lines into one line
         # the " " is to join each line adding a space in between
         merged_queries = " ".join(q.strip() for q in queries)
