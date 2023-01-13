@@ -1,5 +1,15 @@
 import sys
 
+def is_commented(input):
+    if input.startswith('--'):
+        return True
+    elif input.startswith('/*'):
+        return True
+    elif input.endswith('*/'):
+        return True
+    else:
+        return False
+
 def readFile():
     queries = []
     # pass file name in the argument you want to read
@@ -7,7 +17,7 @@ def readFile():
         for line in file:
             li = line.strip()
             # remove commented lines
-            if not li.startswith('--'):
+            if not is_commented(li):
                 queries.append(line.rstrip())
             
         # join queries from multiple lines into one line
