@@ -1,6 +1,4 @@
 import pandas as pd
-from FormatQueries import *
-from FormatSolutionQueries import *
 from sqlalchemy import create_engine
 from openpyxl import Workbook, load_workbook
 from openpyxl.utils.cell import get_column_letter
@@ -48,7 +46,7 @@ def execute_formatted_file(database, path, formatted_file):
                 with pd.ExcelWriter(path,mode="a",engine="openpyxl",if_sheet_exists="overlay") as writer:
                     # df.to_excel(writer,sheet_name="Sheet",startrow=writer.sheets["Sheet"].max_row,index=False)
                     df.to_excel(writer,sheet_name=f"Sheet{page}", index=False)
-                    if formatted_file == 'FormattedQueries.sql':
+                    if formatted_file == './FormatAndExecute/FormattedQueries.sql':
                         print(f'Query {page} write successfully')
                 page += 1
             except Exception as err:
@@ -83,21 +81,3 @@ def auto_adjust_column_width(path):
                     pass
                 ws.column_dimensions[letter].width = adjusted_width
     wb.save(path)
-
-def main():
-    database = get_database()
-    files = {'FormattedQueries.sql': 'Result_Data.xlsx', 'FormattedSolution.sql': 'Solution_Result.xlsx'}
-    try:
-        create_connector_engine(database)
-        print(f"{database} connected, now processing...\n")
-        writeFile()
-        writeSolutionFile()
-        for file, path in files.items():
-            create_workbook(path) 
-            execute_formatted_file(database, path, file)
-            remove_default_sheet(path)
-            auto_adjust_column_width(path)
-    except Exception as err:
-        print(f"Error Occured: {err}")
-
-main()
