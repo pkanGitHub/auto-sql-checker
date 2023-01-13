@@ -1,0 +1,10 @@
+__pycache__/
+**/.DS_Store
+
+#ignore all these files upon pushing to remote
+*.xlsx
+*.sql
+*.js
+
+# but not ignore template file
+!example.sql

@@ -12,8 +12,8 @@ def is_commented(input):
 
 def readFile():
     queries = []
-    # pass solution file name in the argument you want to read
-    with open(f"./Solutions/MySQL/{sys.argv[1]}") as file:
+    # pass file name in the argument you want to read
+    with open(f"./sqlFiles/{sys.argv[2]}") as file:
         for line in file:
             li = line.strip()
             # remove commented lines
@@ -28,9 +28,9 @@ def readFile():
 
         return final_queries
         
-def writeSolutionFile():
+def writeFile():
     line = readFile()
-    with open("FormattedSolution.sql", "w") as file:
+    with open("./FormatAndExecute/FormattedQueries.sql", "w") as file:
         for q in line:
             # write each queries in its own line in sql file
             file.write(f"{q.strip()}\n")

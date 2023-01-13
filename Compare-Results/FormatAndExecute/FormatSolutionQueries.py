@@ -1,12 +1,23 @@
 import sys
+
+def is_commented(input):
+    if input.startswith('--'):
+        return True
+    elif input.startswith('/*'):
+        return True
+    elif input.endswith('*/'):
+        return True
+    else:
+        return False
+
 def readFile():
     queries = []
-    # pass file name in the argument you want to read
-    with open(f"./sqlFiles/{sys.argv[2]}") as file:
+    # pass solution file name in the argument you want to read
+    with open(f"./Solutions/MySQL/{sys.argv[1]}") as file:
         for line in file:
             li = line.strip()
             # remove commented lines
-            if not li.startswith('--'):
+            if not is_commented(li):
                 queries.append(line.rstrip())
             
         # join queries from multiple lines into one line
@@ -17,9 +28,9 @@ def readFile():
 
         return final_queries
         
-def writeFile():
+def writeSolutionFile():
     line = readFile()
-    with open("FormattedQueries.sql", "w") as file:
+    with open("./FormatAndExecute/FormattedSolution.sql", "w") as file:
         for q in line:
             # write each queries in its own line in sql file
             file.write(f"{q.strip()}\n")
