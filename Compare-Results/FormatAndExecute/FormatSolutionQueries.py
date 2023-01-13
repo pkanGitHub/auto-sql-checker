@@ -30,7 +30,7 @@ def readFile():
         
 def writeSolutionFile():
     line = readFile()
-    with open("FormattedSolution.sql", "w") as file:
+    with open("./FormatAndExecute/FormattedSolution.sql", "w") as file:
         for q in line:
             # write each queries in its own line in sql file
             file.write(f"{q.strip()}\n")

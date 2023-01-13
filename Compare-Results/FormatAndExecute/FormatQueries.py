@@ -1,4 +1,5 @@
 import sys
+
 def readFile():
     queries = []
     # pass file name in the argument you want to read
@@ -19,7 +20,7 @@ def readFile():
         
 def writeFile():
     line = readFile()
-    with open("FormattedQueries.sql", "w") as file:
+    with open("./FormatAndExecute/FormattedQueries.sql", "w") as file:
         for q in line:
             # write each queries in its own line in sql file
             file.write(f"{q.strip()}\n")
