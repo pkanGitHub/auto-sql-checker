@@ -4,6 +4,9 @@ from FormatAndExecute.ExecuteQueries import *
 
 
 def main():
+    if len(sys.argv) < 3:
+        print("\nMissing argument(s) in the command line. [1] solution file [2] your file ...")
+        sys.exit(1)
     database = get_database()
     files = {'FormattedQueries.sql': 'Result_Data.xlsx', 'FormattedSolution.sql': 'Solution_Result.xlsx'}
     try:
