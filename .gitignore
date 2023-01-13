@@ -8,3 +8,4 @@ __pycache__/
 
 # but not ignore template file
 !example.sql
+!example.js
