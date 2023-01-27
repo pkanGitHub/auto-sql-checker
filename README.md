@@ -1,6 +1,6 @@
 # Auto SQL Checkers (In development)
 
-This Checker program is intend to use for IT 3380. As a PLA, it is sometimes really time consuming while having to check 30+ students with at least 10+ queries each. This program is design to make grading easier for myself by having the program auto execute and get the results from assignment files.
+This Checker program is intend to use for IT 3380. As a PLA, it is sometimes really time consuming while having to check multiple students with 10+ queries each. This program is design to make grading easier for myself by having the program auto execute and get the results from assignment files.
 
 **GOAL:** the final version is aiming to compare the results and auto grade.
 
